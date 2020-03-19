@@ -71,3 +71,13 @@ ORDER BY SUM(ventes.QUANTITE) DESC;
 
 # 12. Lister chaque ticket pour lequel la quantité totale d’articles vendus est supérieure à 500. 
 # On exclura du total, les ventes ayant une quantité supérieure à 50 (classer par quantité décroissante)
+
+SELECT ventes.NUMERO_TICKET, SUM(ventes.QUANTITE) AS total
+FROM ventes
+WHERE ventes.QUANTITE < 50
+GROUP BY ventes.NUMERO_TICKET
+HAVING total > 500
+ORDER BY SUM(ventes.QUANTITE) DESC;
+
+# 13. Lister les bières de type ‘Trappiste’. (id, nom de la bière, volume et titrage)
+
