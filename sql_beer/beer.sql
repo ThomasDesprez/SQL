@@ -120,8 +120,16 @@ GROUP BY ventes.ANNEE;
 
 # 18. Lister les quantités vendues de chaque article pour l’année 2016.
 
-SELECT ID_ARTICLE, article.NOM_ARTICLE, SUM(ventes.QUANTITE)
+SELECT article.ID_ARTICLE, article.NOM_ARTICLE, SUM(ventes.QUANTITE)
 FROM ventes
 INNER JOIN article ON ventes.ID_ARTICLE = article.ID_ARTICLE
 WHERE ventes.ANNEE = "2016"
-GROUP BY article.NOM_ARTICLE
+GROUP BY article.NOM_ARTICLE;
+
+# 19. Lister les quantités vendues de chaque article pour les années 2014,2015 ,2016.
+
+SELECT article.ID_ARTICLE, article.NOM_ARTICLE, SUM(ventes.QUANTITE) AS "Quantité vendue"
+FROM ventes
+INNER JOIN article ON ventes.ID_ARTICLE = article.ID_ARTICLE
+WHERE ventes.ANNEE IN("2016","2014","2015")
+GROUP BY article.NOM_ARTICLE;
