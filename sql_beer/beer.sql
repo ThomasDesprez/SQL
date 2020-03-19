@@ -81,3 +81,17 @@ ORDER BY SUM(ventes.QUANTITE) DESC;
 
 # 13. Lister les bières de type ‘Trappiste’. (id, nom de la bière, volume et titrage)
 
+SELECT DISTINCT article.ID_ARTICLE, article.NOM_ARTICLE, article.VOLUME, article.TITRAGE
+FROM article
+INNER JOIN type ON type.ID_TYPE = article.ID_TYPE
+WHERE type.NOM_TYPE = "Trappiste";
+
+# 14. Lister les marques de bières du continent ‘Afrique’
+
+SELECT marque.NOM_MARQUE
+FROM marque
+INNER JOIN pays ON pays.ID_PAYS = marque.ID_PAYS
+INNER JOIN continent ON continent.ID_CONTINENT = pays.ID_CONTINENT
+WHERE continent.NOM_CONTINENT = "Afrique";
+
+# 15. Lister les bières du continent ‘Afrique’
