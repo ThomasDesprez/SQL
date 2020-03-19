@@ -44,7 +44,14 @@ WHERE DATE_VENTE LIKE "2014-03-%" OR DATE_VENTE LIKE "2014-06-%";
 
 # 8. Afficher la liste des bières classée par couleur. (Afficher l’id et le nom)
 
-SELECT * 
+SELECT DISTINCT article.ID_ARTICLE, article.NOM_ARTICLE
 FROM article
 INNER JOIN couleur ON article.ID_Couleur = couleur.ID_Couleur
-ORDER BY NOM_COULEUR
+ORDER BY NOM_COULEUR;
+
+# 9. Afficher la liste des bières n’ayant pas de couleur. (Afficher l’id et le nom)
+
+SELECT article.ID_ARTICLE, article.NOM_ARTICLE
+FROM article
+INNER JOIN couleur ON article.ID_Couleur = couleur.ID_Couleur
+WHERE couleur.ID_Couleur = null
