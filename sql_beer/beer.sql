@@ -186,6 +186,13 @@ GROUP BY couleur.NOM_COULEUR;
 
 # 25. Donner pour chaque fabricant, le nombre de tickets sur lesquels apparait un de ses produits en 2014
 
+SELECT fabricant.NOM_FABRICANT, COUNT(ventes.NUMERO_TICKET) AS "Nombre Tickets"
+FROM fabricant
+INNER JOIN marque USING(ID_FABRICANT)
+INNER JOIN article USING(ID_MARQUE) 
+INNER JOIN ventes USING(ID_ARTICLE)
+GROUP BY fabricant.NOM_FABRICANT
+
 # 26. Donner l’ID, le nom, le volume et la quantité vendue des 20 articles les plus vendus en 2016
 
 # 27. Donner l’ID, le nom, le volume et la quantité vendue des 5 ‘Trappistes’ les plus vendus en 2016
