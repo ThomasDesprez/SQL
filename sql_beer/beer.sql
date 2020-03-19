@@ -109,4 +109,19 @@ WHERE continent.NOM_CONTINENT = "Afrique";
 SELECT ventes.ANNEE, ventes.NUMERO_TICKET, ROUND(SUM(article.PRIX_ACHAT*1.15),2) AS "Prix de vente"
 FROM ventes 
 INNER JOIN article ON ventes.ID_ARTICLE = article.ID_ARTICLE
-GROUP BY  ventes.ANNEE, ventes.NUMERO_TICKET
+GROUP BY  ventes.ANNEE, ventes.NUMERO_TICKET;
+
+# 17. Donner le C.A. par année.
+
+SELECT ventes.ANNEE, ROUND(SUM(article.PRIX_ACHAT*ventes.QUANTITE),2) AS CA
+FROM ventes
+INNER JOIN article ON ventes.ID_ARTICLE = article.ID_ARTICLE
+GROUP BY ventes.ANNEE;
+
+# 18. Lister les quantités vendues de chaque article pour l’année 2016.
+
+SELECT ID_ARTICLE, article.NOM_ARTICLE, SUM(ventes.QUANTITE)
+FROM ventes
+INNER JOIN article ON ventes.ID_ARTICLE = article.ID_ARTICLE
+WHERE ventes.ANNEE = "2016"
+GROUP BY article.NOM_ARTICLE
