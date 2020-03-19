@@ -14,7 +14,11 @@ WHERE DATE_VENTE LIKE ("2014-01-15%");
 
 SELECT * 
 FROM beer.ticket
-WHERE DATE_VENTE BETWEEN "2014-01-15 00:00:00" AND "2014-01-18 00:00:00";
+WHERE DATE_VENTE IN("2014-01-15 00:00:00","2014-01-18 00:00:00");
+
+SELECT * 
+FROM beer.ticket
+WHERE DATE_VENTE ="2014-01-15 00:00:00" OR "2014-01-18 00:00:00";
 
 # 4. Editer la liste des articles apparaissant à 50 et plus exemplaires sur un ticket.
 
@@ -186,19 +190,38 @@ GROUP BY couleur.NOM_COULEUR;
 
 # 25. Donner pour chaque fabricant, le nombre de tickets sur lesquels apparait un de ses produits en 2014
 
-SELECT fabricant.NOM_FABRICANT, COUNT(ventes.NUMERO_TICKET) AS "Nombre Tickets"
+SELECT DISTINCT fabricant.NOM_FABRICANT, COUNT(ventes.NUMERO_TICKET) AS "Nombre Tickets"
 FROM fabricant
 INNER JOIN marque USING(ID_FABRICANT)
 INNER JOIN article USING(ID_MARQUE) 
 INNER JOIN ventes USING(ID_ARTICLE)
-GROUP BY fabricant.NOM_FABRICANT
+WHERE ventes.annee = "2014"
+GROUP BY fabricant.NOM_FABRICANT;
 
 # 26. Donner l’ID, le nom, le volume et la quantité vendue des 20 articles les plus vendus en 2016
 
+SELECT  article.ID_ARTICLE, article.NOM_ARTICLE, article.VOLUME , SUM(ventes.QUANTITE) AS "Quantite"
+FROM article
+INNER JOIN ventes USING(ID_ARTICLE)
+WHERE ventes.ANNEE = 2016
+GROUP BY article.ID_ARTICLE
+ORDER BY Quantite DESC
+LIMIT 20;
+
 # 27. Donner l’ID, le nom, le volume et la quantité vendue des 5 ‘Trappistes’ les plus vendus en 2016
+
+SELECT article.ID_ARTICLE, article.NOM_ARTICLE, article.VOLUME, SUM(ventes.QUANTITE) as "Quantite" 
+FROM article
+INNER JOIN ventes USING(ID_ARTICLE)
+INNER JOIN type USING(ID_TYPE)
+WHERE ventes.ANNEE = 2016 AND type.NOM_TYPE = "Trappiste"
+GROUP BY article.NOM_ARTICLE
+ORDER BY quantite DESC
+LIMIT 5;
 
 # 28. Donner l’ID, le nom, le volume et les quantitésvendues en 2015 et 2016, des bières dont les ventes ont été stables. (Moinsde 1% de variation)
  
+
  # 29. Lister les types de bières suivant l’évolution de leurs ventes entre 2015 et 2016. Classer le résultat par ordre décroissant des performances
  
  # 30. Existe-t-il des tickets sans vente ?
