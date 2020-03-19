@@ -2,8 +2,7 @@
 
 SELECT ventes.NUMERO_TICKET 
 FROM ventes 
-INNER JOIN article ON ventes.ID_ARTICLE = article.ID_ARTICLE 
-WHERE article.ID_ARTICLE = 500;
+WHERE ventes.ID_ARTICLE = 500;
 
 # 2. Afficher les tickets du 15/01/2014.
 
@@ -53,5 +52,22 @@ ORDER BY NOM_COULEUR;
 
 SELECT article.ID_ARTICLE, article.NOM_ARTICLE
 FROM article
-INNER JOIN couleur ON article.ID_Couleur = couleur.ID_Couleur
-WHERE couleur.ID_Couleur = null
+WHERE article.ID_Couleur IS NULL;
+
+# 10. Lister pour chaque ticket la quantité totale d’articles vendus. (Classer par quantité décroissante)
+
+SELECT ventes.NUMERO_TICKET, SUM(ventes.QUANTITE)
+FROM ventes 
+GROUP BY ventes.NUMERO_TICKET
+ORDER BY SUM(ventes.QUANTITE) DESC;
+
+# 11.Lister chaque ticket pour lequel la quantité totale d’articles vendus est supérieure à 500. (Classer par quantité décroissante)
+
+SELECT ventes.NUMERO_TICKET, SUM(ventes.QUANTITE) AS total
+FROM ventes
+GROUP BY ventes.NUMERO_TICKET
+HAVING total > 500
+ORDER BY SUM(ventes.QUANTITE) DESC;
+
+# 12. Lister chaque ticket pour lequel la quantité totale d’articles vendus est supérieure à 500. 
+# On exclura du total, les ventes ayant une quantité supérieure à 50 (classer par quantité décroissante)
