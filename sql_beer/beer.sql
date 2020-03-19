@@ -159,8 +159,22 @@ INNER JOIN type ON article.ID_TYPE = type.ID_TYPE where type.NOM_TYPE = 'Trappis
 
 # 22. Lister les tickets sur lesquels apparaissent un des articles apparaissant aussi sur le ticket 2014-856 (le ticket 856 de l’année 2014)
 
+SELECT ventes.NUMERO_TICKET
+FROM ventes
+WHERE ventes.ID_ARTICLE IN (
+							SELECT ventes.ID_ARTICLE
+							FROM ventes
+                            INNER JOIN article ON article.ID_ARTICLE = ventes.ID_ARTICLE
+                            WHERE ventes.NUMERO_TICKET=856 AND ventes.ANNEE ="2014");
 # 23. Lister les articles ayant un degré d’alcool plus élevé que la plus forte des trappistes
 
+SELECT article.NOM_ARTICLE
+FROM article 
+WHERE article.TITRAGE > (
+						SELECT MAX(article.TITRAGE)
+						FROM article
+						INNER JOIN type ON article.ID_TYPE = type.ID_TYPE
+						WHERE type.NOM_TYPE = "Trappiste");
 # 24. Editer les quantités vendues pour chaque couleur en 2014
 
 # 25. Donner pour chaque fabricant, le nombre de tickets sur lesquels apparait un de ses produits en 2014
