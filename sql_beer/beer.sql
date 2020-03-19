@@ -95,3 +95,13 @@ INNER JOIN continent ON continent.ID_CONTINENT = pays.ID_CONTINENT
 WHERE continent.NOM_CONTINENT = "Afrique";
 
 # 15. Lister les bières du continent ‘Afrique’
+
+SELECT article.NOM_ARTICLE
+FROM article
+INNER JOIN marque ON article.ID_MARQUE = marque.ID_MARQUE
+INNER JOIN pays ON pays.ID_PAYS = marque.ID_PAYS
+INNER JOIN continent ON continent.ID_CONTINENT = pays.ID_CONTINENT
+WHERE continent.NOM_CONTINENT = "Afrique";
+
+# 16. Lister les tickets (année, numéro de ticket, montant total payé). 
+# En sachant que le prix de vente est égal au prix d’achat augmenté de 15% et que l’on n’est pas assujetti à la TVA.
