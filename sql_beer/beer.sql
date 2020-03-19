@@ -36,4 +36,8 @@ SELECT *
 FROM ticket
 WHERE DATE_VENTE BETWEEN "2014-03-01 00:00:00" AND "2014-05-01 00:00:00";
 
+# 7. Quelles sont les tickets émis au mois de mars et juin 2014 ?
 
+SELECT *
+FROM ticket 
+WHERE DATE_VENTE LIKE "2014-03-%" OR DATE_VENTE LIKE "2014-06-%";
