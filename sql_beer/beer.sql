@@ -41,3 +41,10 @@ WHERE DATE_VENTE BETWEEN "2014-03-01 00:00:00" AND "2014-05-01 00:00:00";
 SELECT *
 FROM ticket 
 WHERE DATE_VENTE LIKE "2014-03-%" OR DATE_VENTE LIKE "2014-06-%";
+
+# 8. Afficher la liste des bières classée par couleur. (Afficher l’id et le nom)
+
+SELECT * 
+FROM article
+INNER JOIN couleur ON article.ID_Couleur = couleur.ID_Couleur
+ORDER BY NOM_COULEUR
