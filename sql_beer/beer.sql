@@ -177,6 +177,13 @@ WHERE article.TITRAGE > (
 						WHERE type.NOM_TYPE = "Trappiste");
 # 24. Editer les quantités vendues pour chaque couleur en 2014
 
+SELECT couleur.NOM_COULEUR AS "Couleur", SUM(ventes.QUANTITE) AS "Quantité vendue"
+FROM ventes
+INNER JOIN article ON ventes.ID_ARTICLE = article.ID_ARTICLE
+INNER JOIN couleur ON article.ID_Couleur = couleur.ID_Couleur
+WHERE ventes.ANNEE = "2014"
+GROUP BY couleur.NOM_COULEUR;
+
 # 25. Donner pour chaque fabricant, le nombre de tickets sur lesquels apparait un de ses produits en 2014
 
 # 26. Donner l’ID, le nom, le volume et la quantité vendue des 20 articles les plus vendus en 2016
