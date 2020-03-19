@@ -128,8 +128,51 @@ GROUP BY article.NOM_ARTICLE;
 
 # 19. Lister les quantités vendues de chaque article pour les années 2014,2015 ,2016.
 
-SELECT article.ID_ARTICLE, article.NOM_ARTICLE, SUM(ventes.QUANTITE) AS "Quantité vendue"
+SELECT ventes.ANNEE, article.NOM_ARTICLE, SUM(ventes.QUANTITE) AS "Quantité vendue"
 FROM ventes
 INNER JOIN article ON ventes.ID_ARTICLE = article.ID_ARTICLE
 WHERE ventes.ANNEE IN("2016","2014","2015")
-GROUP BY article.NOM_ARTICLE;
+GROUP BY article.NOM_ARTICLE, ventes.ANNEE;
+
+# 20. Lister les articles qui n’ont fait l’objet d’aucune vente en 2014.
+
+SELECT article.ID_ARTICLE, article.NOM_ARTICLE 
+FROM article 
+WHERE id_article not in (
+						SELECT ventes.id_article 
+						FROM ventes 
+						WHERE annee = 2014);  
+                        
+# 21. Coder de 3 manières différentes la requête suivante : Lister les pays qui fabriquent des bières de type ‘Trappiste’
+
+SELECT DISTINCT pays.NOM_PAYS 
+FROM pays 
+INNER JOIN marque ON pays.ID_PAYS = marque.ID_PAYS 
+INNER JOIN article ON marque.ID_MARQUE = article.ID_MARQUE 
+INNER JOIN type ON article.ID_TYPE = type.ID_TYPE where type.NOM_TYPE = 'Trappiste';
+
+#SELECT DISTINCT pays.NOM_PAYS 
+#FROM pays 
+#INNER JOIN marque ON pays.ID_PAYS = marque.ID_PAYS
+
+#Je reviens dessus après
+
+# 22. Lister les tickets sur lesquels apparaissent un des articles apparaissant aussi sur le ticket 2014-856 (le ticket 856 de l’année 2014)
+
+# 23. Lister les articles ayant un degré d’alcool plus élevé que la plus forte des trappistes
+
+# 24. Editer les quantités vendues pour chaque couleur en 2014
+
+# 25. Donner pour chaque fabricant, le nombre de tickets sur lesquels apparait un de ses produits en 2014
+
+# 26. Donner l’ID, le nom, le volume et la quantité vendue des 20 articles les plus vendus en 2016
+
+# 27. Donner l’ID, le nom, le volume et la quantité vendue des 5 ‘Trappistes’ les plus vendus en 2016
+
+# 28. Donner l’ID, le nom, le volume et les quantitésvendues en 2015 et 2016, des bières dont les ventes ont été stables. (Moinsde 1% de variation)
+ 
+ # 29. Lister les types de bières suivant l’évolution de leurs ventes entre 2015 et 2016. Classer le résultat par ordre décroissant des performances
+ 
+ # 30. Existe-t-il des tickets sans vente ?
+ 
+ # 31. Lister les produits vendus en 2016 dans des quantités jusqu’à -15% des quantités de l’article le plus vendu.
