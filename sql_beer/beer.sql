@@ -14,5 +14,11 @@ SELECT *
 FROM beer.ticket
 WHERE DATE_VENTE BETWEEN "2014-01-15 00:00:00" AND "2014-01-18 00:00:00";
 
+# 4. Editer la liste des articles apparaissant à 50 et plus exemplaires sur un ticket.
+
+SELECT *
+FROM article 
+INNER JOIN ventes ON ventes.ID_ARTICLE = article.ID_ARTICLE 
+WHERE ventes.QUANTITE > 50
 
 
