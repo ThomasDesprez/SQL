@@ -179,6 +179,7 @@ WHERE article.TITRAGE > (
 						FROM article
 						INNER JOIN type ON article.ID_TYPE = type.ID_TYPE
 						WHERE type.NOM_TYPE = "Trappiste");
+                        
 # 24. Editer les quantités vendues pour chaque couleur en 2014
 
 SELECT couleur.NOM_COULEUR AS "Couleur", SUM(ventes.QUANTITE) AS "Quantité vendue"
@@ -265,12 +266,11 @@ ORDER BY (total2016.ventes2016-total2015.ventes2015) DESC;
  
  SELECT * 
  FROM ticket
- WHERE ticket.NUMERO_TICKET NOT IN (
-									SELECT ventes.NUMERO_TICKET 
+ WHERE CONCAT(ticket.NUMERO_TICKET,ticket.ANNEE) NOT IN (
+									SELECT CONCAT(ventes.NUMERO_TICKET,ventes.ANNEE)
                                     FROM ventes);
  
  # 31. Lister les produits vendus en 2016 dans des quantités jusqu’à -15% des quantités de l’article le plus vendu.
-
 
 SELECT * 
 FROM article
@@ -282,12 +282,16 @@ HAVING SUM(ventes.QUANTITE) > (SELECT SUM(QUANTITE*0.85) AS ventes_quantite FROM
                                     GROUP BY ID_ARTICLE 
                                     ORDER BY ventes_quantite DESC 
                                     LIMIT 1);
-                                    
+
 # 32. Appliquer une augmentation de tarif de 10% pour toutes les bières ‘Trappistes’ de couleur ‘Blonde’
 
+UPDATE article 
+INNER JOIN type USING(ID_TYPE) 
+INNER JOIN couleur USING(ID_COULEUR)
+SET article.PRIX_ACHAT = article.PRIX_ACHAT*1.1 
+WHERE type.NOM_TYPE = "Trappiste" AND couleur.NOM_COULEUR = "Blonde";
 
 # 33. Mettre à jour le degré d’alcool des toutes les bières n’ayant pas cette information. On y mettra le degré d’alcool de la moins forte des bières du même type et de même couleur.
-
 
 # 34. Suppression des bières qui ne sont pas des bières ! (Type ‘Bière Aromatisée’)
 
