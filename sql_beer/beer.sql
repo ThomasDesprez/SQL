@@ -227,21 +227,46 @@ INNER JOIN (
 			SELECT ventes.ID_article AS article2015 , SUM(ventes.QUANTITE) AS ventes2015 
 			FROM ventes
 			WHERE ventes.ANNEE = "2015"
-			GROUP BY ventes.ID_ARTICLE) AS total2015
-			ON total2015.article2015 = article.ID_ARTICLE
+			GROUP BY ventes.ID_ARTICLE
+            ) 
+            AS total2015 ON total2015.article2015 = article.ID_ARTICLE
 INNER JOIN (
 			SELECT ventes.ID_article AS article2016, SUM(ventes.QUANTITE) AS ventes2016 
 			FROM ventes
 			WHERE ventes.ANNEE = "2016"
-			GROUP BY ventes.ID_ARTICLE) AS total2016 
-            ON total2016.article2016 = article.ID_ARTICLE
+			GROUP BY ventes.ID_ARTICLE
+            ) 
+            AS total2016 ON total2016.article2016 = article.ID_ARTICLE
 WHERE ((((total2016.ventes2016-total2015.ventes2015)/total2016.ventes2016)*100)
 BETWEEN -1 AND 1);
 
  # 29. Lister les types de bières suivant l’évolution de leurs ventes entre 2015 et 2016. Classer le résultat par ordre décroissant des performances
- 
- 
+
+SELECT article.ID_ARTICLE, article.NOM_ARTICLE, article.VOLUME, total2015.ventes2015 AS "Total de 2015", total2016.ventes2016 AS "Total de 2016", total2016.ventes2016-total2015.ventes2015 AS "Evolution"
+FROM article
+INNER JOIN (
+			SELECT ventes.ID_article AS article2015 , SUM(ventes.QUANTITE) AS ventes2015 
+			FROM ventes
+			WHERE ventes.ANNEE = "2015"
+			GROUP BY ventes.ID_ARTICLE
+            ) 
+            AS total2015 ON total2015.article2015 = article.ID_ARTICLE
+INNER JOIN (
+			SELECT ventes.ID_article AS article2016, SUM(ventes.QUANTITE) AS ventes2016 
+			FROM ventes
+			WHERE ventes.ANNEE = "2016"
+			GROUP BY ventes.ID_ARTICLE
+            ) 
+            AS total2016 ON total2016.article2016 = article.ID_ARTICLE
+ORDER BY (total2016.ventes2016-total2015.ventes2015) DESC;
+
  
  # 30. Existe-t-il des tickets sans vente ?
+ 
+ SELECT * 
+ FROM ticket
+ WHERE ticket.NUMERO_TICKET NOT IN (
+									SELECT ventes.NUMERO_TICKET 
+                                    FROM ventes)
  
  # 31. Lister les produits vendus en 2016 dans des quantités jusqu’à -15% des quantités de l’article le plus vendu.
