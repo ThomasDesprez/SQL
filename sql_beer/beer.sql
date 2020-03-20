@@ -210,7 +210,7 @@ LIMIT 20;
 
 # 27. Donner l’ID, le nom, le volume et la quantité vendue des 5 ‘Trappistes’ les plus vendus en 2016
 
-SELECT article.ID_ARTICLE, article.NOM_ARTICLE, article.VOLUME, SUM(ventes.QUANTITE) as "Quantite" 
+SELECT article.ID_ARTICLE, article.NOM_ARTICLE, article.VOLUME, SUM(ventes.QUANTITE) as "Quantite"
 FROM article
 INNER JOIN ventes USING(ID_ARTICLE)
 INNER JOIN type USING(ID_TYPE)
@@ -219,10 +219,28 @@ GROUP BY article.NOM_ARTICLE
 ORDER BY quantite DESC
 LIMIT 5;
 
-# 28. Donner l’ID, le nom, le volume et les quantitésvendues en 2015 et 2016, des bières dont les ventes ont été stables. (Moinsde 1% de variation)
- 
+# 28. Donner l’ID, le nom, le volume et les quantités vendues en 2015 et 2016, des bières dont les ventes ont été stables. (Moinsde 1% de variation)
+
+SELECT article.ID_ARTICLE, article.NOM_ARTICLE, article.VOLUME, total2015.ventes2015 AS "Total de 2015", total2016.ventes2016 AS "Total de 2016" 
+FROM article
+INNER JOIN (
+			SELECT ventes.ID_article AS article2015 , SUM(ventes.QUANTITE) AS ventes2015 
+			FROM ventes
+			WHERE ventes.ANNEE = "2015"
+			GROUP BY ventes.ID_ARTICLE) AS total2015
+			ON total2015.article2015 = article.ID_ARTICLE
+INNER JOIN (
+			SELECT ventes.ID_article AS article2016, SUM(ventes.QUANTITE) AS ventes2016 
+			FROM ventes
+			WHERE ventes.ANNEE = "2016"
+			GROUP BY ventes.ID_ARTICLE) AS total2016 
+            ON total2016.article2016 = article.ID_ARTICLE
+WHERE ((((total2016.ventes2016-total2015.ventes2015)/total2016.ventes2016)*100)
+BETWEEN -1 AND 1);
 
  # 29. Lister les types de bières suivant l’évolution de leurs ventes entre 2015 et 2016. Classer le résultat par ordre décroissant des performances
+ 
+ 
  
  # 30. Existe-t-il des tickets sans vente ?
  
